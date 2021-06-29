@@ -64,4 +64,8 @@ public class Rq {
 		}
 	}
 
+	public String getControllerTypeCode() {
+		return controllerTypeName;
+	}
+
 }

@@ -9,14 +9,20 @@ import com.sbs.exam.util.Util;
 
 public class App {
 
-	public static void run() {
+	Scanner sc;
+	List<Article> articles;
+	int articlesLastId;
+
+	App() {
+		sc = new Scanner(System.in);
+		articles = new ArrayList<>();
+		articlesLastId = 0;
+	}
+	
+	
+	public void run() {
 		System.out.println("== 텍스트 게시판 시작 ==");
-		
-		Scanner sc = new java.util.Scanner(System.in);
-		
-		List<Article> articles = new ArrayList<>();
-		int articlesLastId = 0 ;
-		
+			
 		for (int i = 0; i < 10; i++) {
 			Article article = new Article();
 			article.id = articlesLastId + 1;
@@ -66,15 +72,7 @@ public class App {
 					continue;
 				}
 				
-				Article foundArticle = null;
-				
-				for (Article article : articles) {
-					if (article.id==id) {
-						foundArticle = article;
-						break;
-					}
-				}
-				
+				Article foundArticle = getArticleById(id);
 				if ( foundArticle == null ) {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.");
 					continue;
@@ -103,14 +101,7 @@ public class App {
 					continue;
 				}
 				
-				Article foundArticle = null;
-				
-				for (Article article : articles) {
-					if (article.id==id) {
-						foundArticle = article;
-						break;
-					}
-				}
+				Article foundArticle = getArticleById(id);
 				
 				if ( foundArticle == null ) {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
@@ -129,15 +120,7 @@ public class App {
 				continue;
 			}
 
-			Article foundArticle = null;
-
-			for (Article article : articles) {
-				if (article.id == id) {
-					foundArticle = article;
-					break;
-				}
-			}
-
+			Article foundArticle = getArticleById(id);
 			if (foundArticle == null) {
 				System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
 				continue;
@@ -161,6 +144,15 @@ public class App {
 		
 		System.out.println("== 텍스트 게시판 종료 ==");
 		
+	}
+
+	private Article getArticleById(int id) {
+		for (Article article : articles) {
+			if(article.id == id) {
+				return article;
+			}
+		}
+		return null;
 	}
 
 }

@@ -6,6 +6,7 @@ import com.sbs.exam.app.Session;
 import com.sbs.exam.app.controller.UsrArticleController;
 import com.sbs.exam.app.controller.UsrMemberController;
 import com.sbs.exam.app.controller.UsrSystemController;
+import com.sbs.exam.app.interceptor.NeedLoginInterceptor;
 import com.sbs.exam.app.repository.ArticleRepository;
 import com.sbs.exam.app.repository.MemberRepository;
 import com.sbs.exam.app.service.ArticleService;
@@ -28,6 +29,11 @@ public class Container {
 	private static MemberService memberService;
 	@Getter
 	private static ArticleService articleService;
+	
+	@Getter
+	private static NeedLoginInterceptor needLoginInterceptor;
+	@Getter
+	private static NeedLoginInterceptor needLogoutInterceptor;
 
 	@Getter
 	private static UsrSystemController usrSystemController;
@@ -45,6 +51,9 @@ public class Container {
 
 		memberService = new MemberService();
 		articleService = new ArticleService();
+		
+		needLoginInterceptor = new NeedLoginInterceptor();
+		needLogoutInterceptor = new NeedLoginInterceptor();
 
 		usrSystemController = new UsrSystemController();
 		usrMemberController = new UsrMemberController();

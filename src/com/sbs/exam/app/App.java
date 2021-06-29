@@ -52,14 +52,6 @@ public class App {
 			
 				System.out.printf("%d번 게시물이 생성되었습니다.\n", article.id);
 			}
-			else if ( command.equals("/usr/article/list")) {
-				System.out.printf("번호 / 작성날짜 / 제목 \n");
-				
-				for (int i = articles.size() - 1; i >= 0; i--) {
-				Article article = articles.get(i);
-					System.out.printf("%d / %s / %s \n", article.id, article.regDate, article.title );
-				}
-			}
 			else if ( command.startsWith("/usr/article/detail")) {
 				String queryString = command.split("\\?",2)[1];
 				String[] queryStringBits = queryString.split("&");
@@ -101,6 +93,54 @@ public class App {
 				System.out.printf("수정날짜 : %s\n", foundArticle.updateDate);
 				System.out.printf("제목 : %s\n", foundArticle.title);
 				System.out.printf("내용 : %s\n", foundArticle.body);
+			}
+			
+			else if ( command.equals("/usr/article/list")) {
+				System.out.printf("번호 / 작성날짜 / 제목 \n");
+				
+				for (int i = articles.size() - 1; i >= 0; i--) {
+				Article article = articles.get(i);
+					System.out.printf("%d / %s / %s \n", article.id, article.regDate, article.title );
+				}
+			}
+			else if ( command.startsWith("/usr/article/delete")) {
+				String queryString = command.split("\\?",2)[1];
+				String[] queryStringBits = queryString.split("&");
+				
+				int id = 0;
+				
+				for (String queryStringBit : queryStringBits) {
+					String[] queryStringBitBits = queryStringBit.split("=",2);
+					String paramName = queryStringBitBits[0];
+					String paramValue = queryStringBitBits[1];
+					
+					if (paramName.equals("id")) {
+						id = Integer.parseInt(paramValue);
+					}
+					
+				}
+				
+				if (id == 0) {
+					System.out.println("id를 입력해주세요.");
+					continue;
+				}
+				
+				Article foundArticle = null;
+				
+				for (Article article : articles) {
+					if (article.id==id) {
+						foundArticle = article;
+						break;
+					}
+				}
+				
+				if ( foundArticle == null ) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+					continue;
+				}
+				
+				articles.remove(foundArticle);
+				System.out.printf("%d번 게시물이 삭제되었습니다.\n", id);
 			}
 			
 			else if ( command.equals("/usr/system/exit")) {

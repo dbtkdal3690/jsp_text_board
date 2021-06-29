@@ -1,4 +1,5 @@
 package com.sbs.exam.app;
+
 import java.util.Scanner;
 
 import com.sbs.exam.app.container.Container;
@@ -8,9 +9,11 @@ import com.sbs.exam.app.dto.Member;
 
 public class App {
 	Scanner sc;
+
 	App() {
 		sc = Container.getSc();
 	}
+
 	public void run() {
 		System.out.println("== 텍스트 게시판 시작 ==");
 
@@ -24,7 +27,7 @@ public class App {
 			String promprName = "명령어";
 
 			if (loginedMember != null) {
-				promprName = loginedMember.nickname;
+				promprName = loginedMember.getNickname();
 			}
 
 			System.out.printf("%s) ", promprName);
@@ -32,7 +35,8 @@ public class App {
 			String command = sc.nextLine().trim();
 
 			Rq rq = new Rq(command);
-			if (rq.isValid == false) {
+
+			if (rq.isValid() == false) {
 				System.out.printf("명령어가 올바르지 않습니다.\n");
 				continue;
 			}
@@ -53,4 +57,5 @@ public class App {
 
 		System.out.println("== 텍스트 게시판 끝 ==");
 	}
+
 }

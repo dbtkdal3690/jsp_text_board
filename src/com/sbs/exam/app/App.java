@@ -16,14 +16,24 @@ public class App {
 		sc = Container.getSc();
 	}
 
+	private void forTestLoginByMemberId(int id) {
+		Member member = Container.getMemberService().getMemberById(id);
+		new Rq().login(member);
+	}
 	public void run() {
 		System.out.println("== 텍스트 게시판 시작 ==");
 
+		
+		//테스트 로그인
+		forTestLoginByMemberId(1);
+		
 		while (true) {
 
 			String promprName = "명령어";
 
 			Rq rq = new Rq();
+			
+			
 
 			if (rq.isLogined()) {
 				Member loginedMember = rq.getLoginedMember();
@@ -56,6 +66,8 @@ public class App {
 
 		System.out.println("== 텍스트 게시판 끝 ==");
 	}
+	
+
 	private boolean runInterceptors(Rq rq) {
 		List<Interceptor> interceptors = new ArrayList<>();
 
